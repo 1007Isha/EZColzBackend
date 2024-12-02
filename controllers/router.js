@@ -46,7 +46,7 @@ router.post('/send-password', [
     }
 
     try {
-        // Generate a random password
+        // Generate a random password (OTP)
         const password = generatePassword();
 
         // Attempt to send the password via email
@@ -56,14 +56,14 @@ router.post('/send-password', [
         // Respond back to client after successfully sending email
         res.status(200).json({
             message: 'Password sent successfully',
-            otp: password  // Return the generated OTP to the frontend
+            otp: password  // Return the generated OTP
         });
     } catch (emailError) {
         console.error('Failed to send email:', emailError.message);
-        // Respond with an error message indicating the email sending failure
         res.status(500).json({ error: 'Failed to send email' });
     }
 });
+
 
 
 // Export router
