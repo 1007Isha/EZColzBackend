@@ -53,7 +53,9 @@ app.post('/send-password', async (req, res) => {
         console.log('Email sent successfully');
 
         // Respond with success
-        res.status(200).json({ message: 'Password sent successfully' });
+        // res.status(200).json({ message: 'Password sent successfully' });
+        res.status(200).json({ message: 'OTP sent successfully', otp: otp });
+
     } catch (emailError) {
         console.error('Failed to send email:', emailError.message);
         res.status(500).json({ error: 'Failed to send email' });
