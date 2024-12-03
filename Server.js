@@ -84,7 +84,7 @@ const mongoose = require("mongoose");
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
-const sendPasswordRoutes = require('./controller/router'); // Corrected import path to router inside controller
+const sendPasswordRoutes = require('./controllers/router'); // Corrected import path to router inside controller
 require('dotenv').config();
 
 const app = express();
