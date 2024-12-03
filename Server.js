@@ -84,7 +84,7 @@ const mongoose = require("mongoose");
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
-const sendPasswordRoutes = require('./router'); // Import the router file for OTP routes
+const sendPasswordRoutes = require('./controller/router'); // Corrected import path to router inside controller
 require('dotenv').config();
 
 const app = express();
@@ -130,3 +130,4 @@ io.on('connection', (socket) => {
 // Start the server
 const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
