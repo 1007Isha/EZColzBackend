@@ -38,7 +38,9 @@ const { generatePassword } = require('../Utils/password');
 const sendEmail = require('../Utils/email');
 const router = express.Router();
 
-// Route to generate OTP and send it via email
+// Temporary store for OTPs (use a more persistent solution like database for production)
+const otpStore = {}; // { email: otp }
+
 router.post('/send-password', async (req, res) => {
     const { email } = req.body;
 
@@ -49,6 +51,9 @@ router.post('/send-password', async (req, res) => {
     try {
         // Generate a 6-digit OTP
         const otp = generatePassword();
+
+        // Store the OTP temporarily (for demo purposes, this should be handled by a database in production)
+        otpStore[email] = otp;
 
         // Send the OTP via email
         await sendEmail(email, 'Your OTP', `Your OTP is: ${otp}`);
@@ -62,4 +67,24 @@ router.post('/send-password', async (req, res) => {
     }
 });
 
+// Endpoint to verify the OTP entered by the user
+router.post('/verify-otp', (req, res) => {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+        return res.status(400).json({ error: 'Email and OTP are required' });
+    }
+
+    const storedOtp = otpStore[email];
+
+    if (storedOtp === otp) {
+        // OTP matches, success
+        res.status(200).json({ message: 'OTP verified successfully' });
+    } else {
+        // OTP does not match
+        res.status(400).json({ error: 'Invalid OTP' });
+    }
+});
+
 module.exports = router;
+
